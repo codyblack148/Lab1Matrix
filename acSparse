@@ -132,10 +132,12 @@ public class SparseMatrix< E extends Arithmetic >
 	public SparseMatrix< E > subtract( SparseMatrix< E > right )
 	{
 		SparseMatrix< E > answer = new SparseMatrix< E >( this.rows, this.cols );
-		answer = this.add(right.negate);
+		answer = this.add(right.negate());
 		return answer;
 	}
 	
+	
+
 	public SparseMatrix< E > scalar( Arithmetic value )
 	{
 		SparseMatrix< E > answer = new SparseMatrix< E >( this.rows, this.cols );
@@ -153,7 +155,7 @@ public class SparseMatrix< E extends Arithmetic >
 		
 		for( int i = 0; i < this.array.size(); i++ )
 		{
-			answer.addElement( new Triple< E >( this.array.get( i ).getCol(), this.array.get( i ).getRow(), this.array.get( i ).getArithmetic() ) );
+			answer.addElement( new Triple< E >( this.array.get( i ).getCol(), this.array.get( i ).getRow(), this.array.get( i ).getArithmetic().negate() ) );
 		}
 		return answer;
 	}
@@ -161,10 +163,11 @@ public class SparseMatrix< E extends Arithmetic >
 	
 public SparseMatrix< E > negate()
 	{
-		SparseMatrix< E > neg = this.transpose;
+		//Arithmetic VALUE = -1;
+		SparseMatrix< E > neg = new SparseMatrix< E >( this.cols, this.rows );
 		for(int i=0; i<array.size();i++)
 		{
-			neg.scalar((-1)*(neg.array.getArithmetic()));
+			neg.addElement( new Triple< E >( this.array.get( i ).getCol(), this.array.get( i ).getRow(), (this.array.get( i ).getArithmetic()   ) ) );
 		}
 		return neg;
 	}

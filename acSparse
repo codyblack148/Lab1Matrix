@@ -7,7 +7,8 @@ import java.util.*;
 public class SparseMatrix< E extends Arithmetic >
 {
 	private ArrayList< Triple > array;
-	private int rows,	cols;
+	private int rows;
+	private int cols;
 	private Random random = new Random();
 	
 	//SparseMatrix toString: print out all of the Triples.
@@ -146,35 +147,6 @@ public class SparseMatrix< E extends Arithmetic >
 		return answer;
 	}
 	
-	/*
-	public SparseMatrix< E > exponentiate( int n )
-	{
-		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
-		SparseMatrix one = new SparseMatrix( this.rows, this.cols );
-		
-		one = this.transpose().
-		
-		boolean firstOdd = true;
-		while( n > 0 )
-		{
-			if( n % 2 == 1 )
-			{
-				if( firstOdd )
-				{
-					answer = one;
-					firstOdd = false;
-				}
-				else
-				{
-					answer = one.multiply( answer );
-				}
-			}
-			n = n/2;
-		}
-		return answer;
-	}
-	*/
-	
 	public SparseMatrix< E > transpose()
 	{
 		SparseMatrix answer = new SparseMatrix( this.cols, this.rows );
@@ -186,41 +158,13 @@ public class SparseMatrix< E extends Arithmetic >
 		return answer;
 	}
 	
-	
 	public SparseMatrix< E > negate()
 	{
-		SparseMatrix answer = this.transpose();
-		answer.scalar((Arithmetic)(-1));
-		return answer;
-	}
-
-	/*
-	public SparseMatrix< E > matrixMultiplication( SparseMatrix< E > right )
-	{	
-		SparseMatrix answer = new SparseMatrix( this.rows, right.cols );
-		int col;
-		int index;
-	
-		for( int i = 0; i < this.array.size(); i++ )
+		SparseMatrix neg = this.transpose;
+		for(int i=0; i<array.size();i++)
 		{
-			col = array.get(i).col;
-			index = right.multBSearch( col );// Collections.binarySearch(array, new Triple(col, 0, 0));
-	
-			if( index >= 0 )
-			{
-
-				while( index - 1 >= 0 && ( right.array.get( index - 1 ).row == col ) )
-				{
-					index--;
-				}
-				while( ( index < right.array.size( ) ) && ( right.array.get(index).row == col ) )
-				{
-					answer.prodInsert( new Triple( this.array.get(i).row, right.array.get(index).col, this.array.get(i).getArithmetic().multiply(right.array.get(index).getArithmetic() ) ) );
-					index++;
-				}
-			}
+			neg.scalar((-1)(neg.array.getArithmetic()));
 		}
-		return answer;
+		return neg;
 	}
-	*/
 }

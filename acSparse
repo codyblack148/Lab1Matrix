@@ -1,0 +1,226 @@
+
+import java.util.Random;
+import java.util.Arrays;
+import java.util.List;
+import java.util.*;
+
+public class SparseMatrix< E extends Arithmetic >
+{
+	private ArrayList< Triple > array;
+	private int rows,	cols;
+	private Random random = new Random();
+	
+	//SparseMatrix toString: print out all of the Triples.
+	
+	public SparseMatrix ( int rows, int cols )
+	{
+		array = new ArrayList< Triple >();
+		this.rows = rows;
+		this.cols = cols;
+	}
+	
+	public SparseMatrix ( int rows, int cols, int percent, Arithmetic a )
+	{
+		array = new ArrayList< Triple >();
+		int i = 0;
+		int j = 0;
+		int c = 0;// To be used as a counter
+		int tot = ( rows * cols );//available number of slots in sparse matrix
+		
+		this.rows = rows;
+		this.cols = cols;
+		
+		while( ( i < rows ) && ( c < ( tot / 2 ) ) )
+		{
+			while( ( j < cols ) && ( c < ( tot / 2 ) ) )
+			{
+				if( percent < ( random.nextInt() % 100 ) + 1 )
+				{
+					Triple t = new Triple ( i, j, a.getRandom() );
+					array.add( t );//adding this value to array[ i ][ j ]					
+					j++;
+					c++;
+				}
+				i++;
+			}
+		}
+	}
+	
+	public void addElement( Triple element )
+	{
+		int left = 0;
+		int right = array.size() - 1;
+		int c = 0;
+		
+		while( left <= right )
+		{
+			int middle = ( left + right ) / 2;
+			
+			//Element is less than the middle value of the array
+			if( element.compareTo( this.array.get(middle) ) > 0 )
+			{
+				left = middle + 1;
+				c = left;
+			}
+			//Element is greater than the middle value of the array
+			else if( element.compareTo( this.array.get(middle) ) < 0 )
+			{
+				right = middle - 1;
+				c = middle;
+			}
+			else
+			{
+				return;
+			}
+		}
+		this.array.add( c, element );
+	}
+	
+	public SparseMatrix< E > add( SparseMatrix< E > right )
+	{
+		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
+		int i;
+		int j;
+			for( i = 0; i < this.array.size(); i++ )
+			{
+				for( j = 0; j < right.array.size(); j++ )
+				{
+					if( i < this.array.size() && j < right.array.size() )
+					{
+						int temp = this.array.get( i ).compareTo( right.array.get( j ) );
+						if( temp > 0)
+						{
+							answer.array.add( right.array.get( j ) );
+							j++;
+						}
+						else if( temp < 0 )
+						{
+							answer.array.add( this.array.get( i ) );
+							i++;
+						}
+						else
+						{
+							Triple t = new Triple( this.array.get( i ).row, this.array.get( i ).col, ( this.array.get( i ).getArithmetic().add( right.array.get( j ).getArithmetic() ) ) );
+							answer.array.add( t );
+							j++;
+							i++;
+						}
+					}
+					else if( i >= this.array.size() )
+					{
+						while( j < right.array.size() )
+						{
+							answer.array.add( right.array.get( j ) );
+							j++;
+						}
+					}
+					else
+					{
+						while( i < this.array.size() )
+						{
+							answer.array.add( this.array.get( i ) );
+							i++;
+						}
+					}
+				}
+			}
+		
+		return answer;
+	}
+
+	public SparseMatrix< E > subtract( SparseMatrix< E > right )
+	{
+		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
+		answer = this.add((right.negate));
+		return answer;
+	}
+	
+	public SparseMatrix< E > scalar( Arithmetic value )
+	{
+		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
+		
+		for( int i = 0; i < this.array.size(); i++ )
+		{
+			answer.array.add( new Triple( this.array.get( i ).row, this.array.get( i ).col, this.array.get( i ).getArithmetic().multiply( value ) ) );
+		}
+		return answer;
+	}
+	
+	/*
+	public SparseMatrix< E > exponentiate( int n )
+	{
+		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
+		SparseMatrix one = new SparseMatrix( this.rows, this.cols );
+		
+		one = this.transpose().
+		
+		boolean firstOdd = true;
+		while( n > 0 )
+		{
+			if( n % 2 == 1 )
+			{
+				if( firstOdd )
+				{
+					answer = one;
+					firstOdd = false;
+				}
+				else
+				{
+					answer = one.multiply( answer );
+				}
+			}
+			n = n/2;
+		}
+		return answer;
+	}
+	*/
+	
+	public SparseMatrix< E > transpose()
+	{
+		SparseMatrix answer = new SparseMatrix( this.cols, this.rows );
+		
+		for( int i = 0; i < this.array.size(); i++ )
+		{
+			answer.addElement( new Triple( this.array.get( i ).col, this.array.get( i ).row, this.array.get( i ).getArithmetic() ) );
+		}
+		return answer;
+	}
+	
+	
+	public SparseMatrix< E > negate()
+	{
+		SparseMatrix answer = this.transpose();
+		answer.scalar((Arithmetic)(-1));
+		return answer;
+	}
+
+	/*
+	public SparseMatrix< E > matrixMultiplication( SparseMatrix< E > right )
+	{	
+		SparseMatrix answer = new SparseMatrix( this.rows, right.cols );
+		int col;
+		int index;
+	
+		for( int i = 0; i < this.array.size(); i++ )
+		{
+			col = array.get(i).col;
+			index = right.multBSearch( col );// Collections.binarySearch(array, new Triple(col, 0, 0));
+	
+			if( index >= 0 )
+			{
+
+				while( index - 1 >= 0 && ( right.array.get( index - 1 ).row == col ) )
+				{
+					index--;
+				}
+				while( ( index < right.array.size( ) ) && ( right.array.get(index).row == col ) )
+				{
+					answer.prodInsert( new Triple( this.array.get(i).row, right.array.get(index).col, this.array.get(i).getArithmetic().multiply(right.array.get(index).getArithmetic() ) ) );
+					index++;
+				}
+			}
+		}
+		return answer;
+	}
+	*/
+}

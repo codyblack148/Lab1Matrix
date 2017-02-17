@@ -7,8 +7,7 @@ import java.util.*;
 public class SparseMatrix< E extends Arithmetic >
 {
 	private ArrayList< Triple > array;
-	private int rows;
-	private int cols;
+	private int rows,	cols;
 	private Random random = new Random();
 	
 	//SparseMatrix toString: print out all of the Triples.
@@ -101,7 +100,7 @@ public class SparseMatrix< E extends Arithmetic >
 						}
 						else
 						{
-							Triple t = new Triple( this.array.get( i ).row, this.array.get( i ).col, ( this.array.get( i ).getArithmetic().add( right.array.get( j ).getArithmetic() ) ) );
+							Triple t = new Triple( this.array.get( i ).getRow(), this.array.get( i ).getCol(), ( this.array.get( i ).getArithmetic().add( right.array.get( j ).getArithmetic() ) ) );
 							answer.array.add( t );
 							j++;
 							i++;
@@ -132,7 +131,7 @@ public class SparseMatrix< E extends Arithmetic >
 	public SparseMatrix< E > subtract( SparseMatrix< E > right )
 	{
 		SparseMatrix answer = new SparseMatrix( this.rows, this.cols );
-		answer = this.add((right.negate));
+		answer = this.add(right.negate);
 		return answer;
 	}
 	
@@ -142,7 +141,7 @@ public class SparseMatrix< E extends Arithmetic >
 		
 		for( int i = 0; i < this.array.size(); i++ )
 		{
-			answer.array.add( new Triple( this.array.get( i ).row, this.array.get( i ).col, this.array.get( i ).getArithmetic().multiply( value ) ) );
+			answer.array.add( new Triple( this.array.get( i ).getRow(), this.array.get( i ).getCol(), this.array.get( i ).getArithmetic().multiply( value ) ) );
 		}
 		return answer;
 	}
@@ -153,17 +152,18 @@ public class SparseMatrix< E extends Arithmetic >
 		
 		for( int i = 0; i < this.array.size(); i++ )
 		{
-			answer.addElement( new Triple( this.array.get( i ).col, this.array.get( i ).row, this.array.get( i ).getArithmetic() ) );
+			answer.addElement( new Triple( this.array.get( i ).getCol(), this.array.get( i ).getRow(), this.array.get( i ).getArithmetic() ) );
 		}
 		return answer;
 	}
 	
-	public SparseMatrix< E > negate()
+	
+public SparseMatrix< E > negate()
 	{
 		SparseMatrix neg = this.transpose;
 		for(int i=0; i<array.size();i++)
 		{
-			neg.scalar((-1)(neg.array.getArithmetic()));
+			neg.scalar((-1)*(neg.array.getArithmetic()));
 		}
 		return neg;
 	}

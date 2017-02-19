@@ -23,21 +23,18 @@ public OrderedList(EnumArithmetic kind){
 public void insertTriple(Triple<Arithmetic> t){
 	if(sparse_matrix_list != null){
 		if(sparse_matrix_list.isEmpty()){
-			sparse_matrix_list.add(t);
+			sparse_matrix_list.add(t);             // this type of add is a insert into the list
 		}
 		else{
-			for(int i=0; i<sparse_matrix_list.size();i++){
+			for(int i=0; i<sparse_matrix_list.size();i++){  
 				if(sparse_matrix_list.get(i).isEqualLocation(t)){
 					sparse_matrix_list.get(i).addTriple(t);
 				}
-				else if(sparse_matrix_list.get(0).compareTo(t) < 0){
-					sparse_matrix_list.add(0, t);
+				else if(sparse_matrix_list.get(i).compareTo(t) < 0){
+					sparse_matrix_list.add(i, t);
 					break;
 				}
-				else if(sparse_matrix_list.get(i).compareTo(t) < 0){
-					//t needs to be inserted at preceding index.
-					sparse_matrix_list.add(i-1, t);
-					break;
+				else{
 				}
 				
 			}
@@ -45,7 +42,7 @@ public void insertTriple(Triple<Arithmetic> t){
 				sparse_matrix_list.add(t);
 			}
 		}
-	}
+	} 
 }
 
 	

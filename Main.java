@@ -73,13 +73,16 @@ public class Main {
 		list.insertTriple(t7);
 		System.out.println(list);
 		list.insertTriple(t6);
+		System.out.println(list);
 		list.insertTriple(t9);
+		System.out.println(list);
 		list.insertTriple(t8);
+		System.out.println(list);
 		list.insertTriple(t11);
-		
-		//System.out.println(list);
+		System.out.println(list);
 		
 		//Desired output: [ 5 6 7 8 9 10 11 12 ]
+		// ACC method works. changes were made for effectiveness
 }
 	
 }

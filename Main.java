@@ -43,7 +43,43 @@ public class Main {
 		 * The following code will test some of the methods of the OrderedList class to ensure functionality.
 		 */
 		
-		//
+		//Test the insert method and check to make sure the OrderedList is sorted by using the toString.
+		AInteger
+		test5 = new AInteger("5"),
+		test6 = new AInteger("6"),
+		test7 = new AInteger("7"),
+		test8 = new AInteger("8"),
+		test9 = new AInteger("9"),
+		test10 = new AInteger("10"),
+		test11 = new AInteger("11"),
+		test12 = new AInteger("12");
+		
+		Triple<Arithmetic> 
+		t5 = new Triple<Arithmetic>(test5,0,0,EnumArithmetic.INTEGER),
+		t6 = new Triple<Arithmetic>(test6,0,1,EnumArithmetic.INTEGER),
+		t7 = new Triple<Arithmetic>(test7,0,2,EnumArithmetic.INTEGER),
+		t8 = new Triple<Arithmetic>(test8,0,3,EnumArithmetic.INTEGER),
+		t9 = new Triple<Arithmetic>(test9,1,0,EnumArithmetic.INTEGER),
+		t10 = new Triple<Arithmetic>(test10,1,1,EnumArithmetic.INTEGER),
+		t11 = new Triple<Arithmetic>(test11,1,2,EnumArithmetic.INTEGER),
+		t12 = new Triple<Arithmetic>(test12,1,3,EnumArithmetic.INTEGER);
+		OrderedList list = new OrderedList(EnumArithmetic.INTEGER);
+		list.insertTriple(t12);
+		System.out.println(list);
+		list.insertTriple(t10);
+		System.out.println(list);
+		list.insertTriple(t5);
+		System.out.println(list);
+		list.insertTriple(t7);
+		System.out.println(list);
+		list.insertTriple(t6);
+		list.insertTriple(t9);
+		list.insertTriple(t8);
+		list.insertTriple(t11);
+		
+		//System.out.println(list);
+		
+		//Desired output: [ 5 6 7 8 9 10 11 12 ]
 }
 	
 }

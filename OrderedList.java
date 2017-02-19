@@ -30,12 +30,19 @@ public void insertTriple(Triple<Arithmetic> t){
 				if(sparse_matrix_list.get(i).isEqualLocation(t)){
 					sparse_matrix_list.get(i).addTriple(t);
 				}
+				else if(sparse_matrix_list.get(0).compareTo(t) < 0){
+					sparse_matrix_list.add(0, t);
+					break;
+				}
 				else if(sparse_matrix_list.get(i).compareTo(t) < 0){
 					//t needs to be inserted at preceding index.
 					sparse_matrix_list.add(i-1, t);
 					break;
 				}
 				
+			}
+			if(sparse_matrix_list.get(sparse_matrix_list.size() - 1).compareTo(t) > 0){
+				sparse_matrix_list.add(t);
 			}
 		}
 	}

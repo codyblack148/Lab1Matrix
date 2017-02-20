@@ -68,23 +68,11 @@ public void removeTriple(int row, int col){
 public int getTripleIndex(int row, int col){
 	//use binary search or linear search to find it. Binary is better but I don't know how to do it yet.
 	//return -1 if there is no Triple at location.
-	int i=0;
-	int j=sparse_matrix_list.size()-1;
-	while(i<=j){
-		int m=(i+j)/2;
-		if(sparse_matrix_list.get(m).getRowNum() == row){
-			
-			/* while the rows remain the same check the column numbers */		
-		
-		
+	for(int k=0; k < sparse_matrix_list.size();k++){
+		if(sparse_matrix_list.get(k).getRowNum() == row && sparse_matrix_list.get(k).getColNum() == col){
+			return k;
 		}
-		else if(sparse_matrix_list.get(m).getRowNum() > row){      //this.rows is greater than row
-			j=m-1;
-		}
-		else if (sparse_matrix_list.get(m).getRowNum() < row){
-			i=m+1;
-		}
-	}
+	}	
 	return -1;
 }
 
@@ -138,14 +126,25 @@ public EnumArithmetic getKind(){
 /**Returns a clone of this OrderedList.
  * @return Clone of this OrderedList.
  */
-public OrderedList getOrderedList()throws CloneNotSupportedException{
-	return (OrderedList)this.clone();
+public OrderedList getOrderedList(){
+	OrderedList ans = null;
+	
+	try{
+		ans = (OrderedList)super.clone();
+		//for(int i=0; i < sparse_matrix_list.size(); i++){
+			if(this.sparse_matrix_list !=null){
+				ans.sparse_matrix_list=(ArrayList<Triple<Arithmetic>>)this.sparse_matrix_list.clone();
+			}
+		//}
+	}
+	catch ( CloneNotSupportedException cns ) {}
+	return ans;
 }
 
 public OrderedList negate(){
-	OrderedList neg = getOrderedList();	
+	OrderedList neg = this.getOrderedList();	
 	for(int i=0; i<sparse_matrix_list.size();i++){
-		neg.sparse_matrix_list.get(i).negate();
+		neg.sparse_matrix_list.get(i).changeTripleValue(sparse_matrix_list.get(i).getValue().negate());
 	}
 	return neg;
 }

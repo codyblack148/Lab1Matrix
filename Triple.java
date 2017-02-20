@@ -120,9 +120,6 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 		return this.row_num==t.row_num && this.col_num==t.col_num && this.kind.equals(t.kind);
 	}
 	
-	public void negate(){
-		this.value.negate();
-	}
 
 	/**Compare to method for Triples.
 	 * @param t Triple to be compared with this.

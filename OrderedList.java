@@ -13,7 +13,7 @@ public class OrderedList implements Cloneable {
 	 * more methods later as needed.
 	 */
 
-private ArrayList<Triple> sparse_matrix_list = new ArrayList<Triple>();	
+private ArrayList<Triple<Arithmetic>> sparse_matrix_list = new ArrayList<Triple<Arithmetic>>();	
 private EnumArithmetic kind;	
 
 /**Constructor for OrderedList object.
@@ -68,6 +68,23 @@ public void removeTriple(int row, int col){
 public int getTripleIndex(int row, int col){
 	//use binary search or linear search to find it. Binary is better but I don't know how to do it yet.
 	//return -1 if there is no Triple at location.
+	int i=0;
+	int j=sparse_matrix_list.size()-1;
+	while(i<=j){
+		int m=(i+j)/2;
+		if(sparse_matrix_list.get(m).getRowNum() == row){
+			
+			/* while the rows remain the same check the column numbers */		
+		
+		
+		}
+		else if(sparse_matrix_list.get(m).getRowNum() > row){      //this.rows is greater than row
+			j=m-1;
+		}
+		else if (sparse_matrix_list.get(m).getRowNum() < row){
+			i=m+1;
+		}
+	}
 	return -1;
 }
 
@@ -83,7 +100,12 @@ public boolean isEmpty(){
  * @return True if OrderedList contains at least one instance of this Arithmetic value.
  */
 public boolean containsArithmeticValue(Arithmetic value){
-	return true;
+	for(int i=0; i<sparse_matrix_list.size();i++){
+		if(sparse_matrix_list.get(i).getValue() == value){
+			return true;
+		}
+	}
+	return false;
 }
 
 /**Checks OrderedList for a an Arithmetic value at a certain location by row number and column number.
@@ -92,17 +114,20 @@ public boolean containsArithmeticValue(Arithmetic value){
  * @return True if OrderedList has an Arithmetic value at given location.
  */
 public boolean containsValueAtLocation(int row, int col){
-	return true;
+	return (getTripleIndex(row,col) > 0);
 }
 
 /**Checks for a specific Triple.
  * @param t Triple to be searched for.
  * @return True if OrderedList contains Triple t.
  */
-public boolean containsTriple(Triple t){
-	return true;
+public boolean containsTriple(Triple<Arithmetic> t){
+	int m = getTripleIndex(t.getRowNum(),t.getColNum());
+	if(m > 0){
+		return (sparse_matrix_list.get(m).equals(t));
+	 }
+	 return false;
 }
-
 /**Get the Arithmetic type that this OrderedList contains.
  * @return The EnumArithmetic kind of this OrderedList.
  */
@@ -113,20 +138,19 @@ public EnumArithmetic getKind(){
 /**Returns a clone of this OrderedList.
  * @return Clone of this OrderedList.
  */
-public OrderedList getOrderedList(){
-	//return clone of this OrderedList. See my Triple clone for guidance.
-	return this;
+public OrderedList getOrderedList()throws CloneNotSupportedException{
+	return (OrderedList)this.clone();
 }
 
+public OrderedList negate(){
+	OrderedList neg = getOrderedList();	
+	for(int i=0; i<sparse_matrix_list.size();i++){
+		neg.sparse_matrix_list.get(i).negate();
+	}
+	return neg;
+}
 	
-	
-	
-	
-	
-	
-	
-	
-public String toString(){
+	public String toString(){
 	StringBuilder sb = new StringBuilder();
 	sb.append("[ ");
 	for(int i=0; i < sparse_matrix_list.size(); i++ ){

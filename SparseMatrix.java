@@ -51,11 +51,15 @@ public class SparseMatrix<E extends Arithmetic> {
 			 * random Arithmetic values of type kind. May have to write a seperate method to do this.
 			 */
 		}
-		
-	public void addSparseMatrix(SparseMatrix m){
+	}
+	public void addSparseMatrix(SparseMatrix<Arithmetic> m){
 		//I don't know how to parametarize this right now.
+		//call the insertTriple method to do all the math for you
+		
 	}
 
+	public void subtractSparseMatrix(SparseMatrix<Arithmetic> m){
+	//use a addSparseMatrix(m.sparse_matrix_list.negate())
 	}
 
 	

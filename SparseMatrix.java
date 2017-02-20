@@ -59,7 +59,7 @@ public class SparseMatrix<E extends Arithmetic> {
 	}
 
 	public void subtractSparseMatrix(SparseMatrix<Arithmetic> m){
-	//use a addSparseMatrix(m.sparse_matrix_list.negate())
+		this.addSparseMatrix(m.sparse_matrix_list.negate())
 	}
 
 	

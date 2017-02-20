@@ -1,16 +1,20 @@
-
 /**
  * @author codyblack
  * Triple will be used to represent an element of a SparseMatrix with row number, column number, and value. 
  * @param <E> E will be used for Arithmetic types.
  */
+
+import java.util.Random;
+
 public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Triple<Arithmetic>> {
 	private Arithmetic value;
 	private int row_num;
 	private int col_num;
 	private EnumArithmetic kind;
+	
+	Random rand = new Random();
 
-	/**Triple Constructor
+	/**Triple Constructor.
 	 * @param value Arithmetic value of Triple.
 	 * @param row_num Row number in Sparsematrix
 	 * @param col_num Column number in SparseMatrix
@@ -21,6 +25,34 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 		this.row_num=row_num;
 		this.col_num=col_num;
 		this.kind=kind;
+	}
+	
+	/** Random Triple constructor.
+	 * @param kind Arithmetic type of random Triple.
+	 * @param rows The max number row that the Triple is allowed to have.
+	 * @param cols The max number column that the Triple is allowed to have.
+	 */
+	public Triple(boolean isRandom, EnumArithmetic kind, int rows, int cols){
+		if(isRandom == true){
+			row_num = rand.nextInt(rows);
+			col_num = rand.nextInt(cols);
+			this.kind = kind;
+			if(this.kind.equals(EnumArithmetic.INTEGER)){
+				value =  AInteger.getRandom();		
+			}
+			else if(this.kind.equals(EnumArithmetic.PRIME)){
+				value =  APrime.getRandom();
+			}
+			else if(this.kind.equals(EnumArithmetic.RATIONAL)){
+				value =  AReal.getRandom();
+			}
+			else{
+				value = ARational.getRandom();
+			}
+		}
+		else{
+			System.out.println("Error with constructor. Enter correct parameters.");
+		}
 	}
 	
 	/**Returns clone of Triple.
@@ -83,12 +115,7 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	public boolean equals(Triple<Arithmetic> t){
 		return (this.row_num==t.row_num && this.col_num==t.col_num && this.kind.equals(t.kind) && this.value.equals(t.value));
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString(){
-		return "Row number: "+row_num+" Column number: "+col_num+" Value: "+value+" Type: "+kind;
-	}
+
 	/**Add two Triples.
 	 * @param t
 	 */
@@ -120,7 +147,13 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 		return this.row_num==t.row_num && this.col_num==t.col_num && this.kind.equals(t.kind);
 	}
 	
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString(){
+		return "Row number: "+row_num+" Column number: "+col_num+" Value: "+value+" Type: "+kind;
+	}
+	
 	/**Compare to method for Triples.
 	 * @param t Triple to be compared with this.
 	 * @return -1,0,or 1 depending on row and column numbers

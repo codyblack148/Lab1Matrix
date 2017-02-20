@@ -18,7 +18,8 @@ class Matrix< E extends Arithmetic > implements Cloneable {
 				POINT = ".";
     private static final int ROWS_DEFAULT = 10,
 			     COLS_DEFAULT = 10;
-
+    private int rows;
+    private int cols;
     private static Random rand = new Random();
     private Arithmetic [][] ary;
 
@@ -36,6 +37,8 @@ class Matrix< E extends Arithmetic > implements Cloneable {
  */
     public Matrix( int rows, int cols ) {
 	ary = new Arithmetic[ rows ][ cols ];
+	this.rows = rows;
+	this.cols = cols;
     }
 
 /**	Construct a Matrix object from a formatted string of the form
@@ -413,5 +416,18 @@ class Matrix< E extends Arithmetic > implements Cloneable {
  */
     public Arithmetic [][] getAry() {
 	return ary;
+    }
+    
+    public SparseMatrix<Arithmetic> changeToSparseMatrix(){
+    	int count = 0;
+    	int i, j;
+    	for(i = 0; i <= rows; i++){
+    		for(j = 0; j <= cols; j++){
+    			/*Search for values that are equal to zero. Increment counter each time one is found.
+    			 * At the end, if 85% of the matrix are zeros, create new SparseMatrix and start 
+    			 * inserting the Triples. If this requirement is not met, return print statement.
+    			 */
+    		}
+    	}
     }
 }

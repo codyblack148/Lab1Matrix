@@ -6,12 +6,6 @@ import java.util.ArrayList;
  *
  */
 public class OrderedList implements Cloneable {
-	
-	/*
-	 * I currently have all of the methods I think we need in here. I went ahead
-	 * and wrote the easier ones but several are left for you. We may have to add
-	 * more methods later as needed.
-	 */
 
 private ArrayList<Triple<Arithmetic>> sparse_matrix_list = new ArrayList<Triple<Arithmetic>>();	
 private EnumArithmetic kind;	
@@ -29,7 +23,7 @@ public OrderedList(EnumArithmetic kind){
 public void insertTriple(Triple<Arithmetic> t){
 	if(sparse_matrix_list != null){
 		if(sparse_matrix_list.isEmpty()){
-			sparse_matrix_list.add(t);             // this type of add is a insert into the list
+			sparse_matrix_list.add(t);             // this type of add is an insert into the list
 		}
 		else{
 			for(int i=0; i<sparse_matrix_list.size();i++){  
@@ -60,7 +54,7 @@ public void removeTriple(int row, int col){
 	}
 }
 
-/**
+/** Returns the index number of a specified Triple.
  * @param row Row number of the Triple object.
  * @param col Column number of the Triple object.
  * @return The index number in the OrderedList of the Triple located at 
@@ -141,6 +135,9 @@ public OrderedList getOrderedList(){
 	return ans;
 }
 
+/** Negates the entire OrderedList.
+ * @return The negated OrderedList.
+ */
 public OrderedList negate(){
 	OrderedList neg = this.getOrderedList();	
 	for(int i=0; i<sparse_matrix_list.size();i++){
@@ -148,7 +145,33 @@ public OrderedList negate(){
 	}
 	return neg;
 }
+
+/**Returns the next Triple after the specified index in the OrderedList.
+ * @param index Index number in OrderedList.
+ * @return The next Triple.
+ */
+public Triple<Arithmetic> getNextTriple(int index){
+	return sparse_matrix_list.get(index+1);
+}
+
+/**Return the Triple at the specified index.
+ * @param index Index to look for Triple.
+ * @return Triple at specified index.
+ */
+public Triple<Arithmetic> getTripleAtIndex(int index){
+	return sparse_matrix_list.get(index);
+}
+
+/** Return the size of the OrderedList.
+ * @return Size of OrderedList.
+ */
+public int getOrderedListSize(){
+	return sparse_matrix_list.size();
+}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 	StringBuilder sb = new StringBuilder();
 	sb.append("[ ");

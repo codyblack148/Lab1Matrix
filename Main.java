@@ -39,6 +39,16 @@ public class Main {
 		t1.subtractTriple(t3);
 		System.out.println(t1); // produces desired results. All 3 methods work.
 		
+		//Test the random Triple constructor.
+		Triple<Arithmetic> 
+		testRand1 = new Triple<Arithmetic>(true,EnumArithmetic.INTEGER,20,20),
+		testRand2 = new Triple<Arithmetic>(true,EnumArithmetic.PRIME,20,20),
+		testRand3 = new Triple<Arithmetic>(true,EnumArithmetic.RATIONAL,20,20),
+		testRand4 = new Triple<Arithmetic>(true,EnumArithmetic.REAL,20,20);
+		System.out.println(testRand1);
+		System.out.println(testRand2);
+		System.out.println(testRand3);
+		System.out.println(testRand4);
 		/*
 		 * The following code will test some of the methods of the OrderedList class to ensure functionality.
 		 */
@@ -84,6 +94,12 @@ public class Main {
 		
 		//Desired output: [ 5 6 7 8 9 10 11 12 ]
 		//Produces desired results.
+		
+		
+		//Test the random SparseMatrix constructor.
+		SparseMatrix sMatrix1 = new SparseMatrix(true,EnumArithmetic.INTEGER);
+		System.out.println(sMatrix1.getSparseMatrixOrderedList());
+		
 }
 	
 }

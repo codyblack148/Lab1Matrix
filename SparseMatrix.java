@@ -1,8 +1,9 @@
-
 /**
  * @author codyblack
  *
  */
+import java.util.Random;
+
 public class SparseMatrix<E extends Arithmetic> {
 	
 	private int rows;
@@ -13,6 +14,8 @@ public class SparseMatrix<E extends Arithmetic> {
 	private static final int RANDOM_MAX = 1000;  //subject to change. Max value for number of random values in 3rd constructor.
 	private OrderedList sparse_matrix_list;
 	private EnumArithmetic kind;
+	
+	Random rand = new Random();
 	
 	/**Constructor for default SparseMatrix with 100 elements.
 	 * @param kind Arithmetic type for SparseMatrix.
@@ -34,7 +37,6 @@ public class SparseMatrix<E extends Arithmetic> {
 		cols = c;
 		sparse_matrix_list = new OrderedList(kind);
 		totalElements = r * c;
-
 	}
 	
 	
@@ -44,26 +46,99 @@ public class SparseMatrix<E extends Arithmetic> {
 	 */
 	public SparseMatrix(boolean isRandom, EnumArithmetic kind){
 		if(isRandom==true){
-			//rows and columns set to random number between 0 and RANDOM_MAX
+			rows = rand.nextInt(RANDOM_MAX);
+			cols = rand.nextInt(RANDOM_MAX);
 			sparse_matrix_list = new OrderedList(kind);
 			totalElements = rows * cols;
-			/*put code here to populate this SparseMatrix with (0.15 * totalElements) number of 
-			 * random Arithmetic values of type kind. May have to write a seperate method to do this.
-			 */
+			int nonZeros = (int) (0.15 * totalElements);
+			for(int i = 0; i < nonZeros; i++){
+				Triple<Arithmetic> t = new Triple<Arithmetic>(true,kind,rows,cols);
+				sparse_matrix_list.insertTriple(t);
+			}
+		}
+		else{
+			System.out.println("Error with constructor. Enter correct parameters.");
 		}
 	}
+	
+	/** Returns a clone of the OrderedList in this SparseMatrix.
+	 * @return A clone of the sparse_matrix_list in this SparseMatrix.
+	 */
+	public OrderedList getSparseMatrixOrderedList(){
+		return sparse_matrix_list.getOrderedList();
+	}
+	
+	/**Getter for SparseMatrix rows.
+	 * @return Number of rows in this SparseMatrix.
+	 */
+	public int getRows(){
+		return rows;
+	}
+	
+	/**Getter for SparseMatrix columns.
+	 * @return Number of columns in this SparseMatrix.
+	 */
+	public int getCols(){
+		return cols;
+	}
+	/** Add this SparseMatrix to input SparseMatrix.
+	 * @param m Input SparseMatrix for addition.
+	 */
 	public void addSparseMatrix(SparseMatrix<Arithmetic> m){
-		//I don't know how to parametarize this right now.
 		//call the insertTriple method to do all the math for you
+		int index = 0;
+		while(m.sparse_matrix_list.getNextTriple(index) != null){
+			this.sparse_matrix_list.insertTriple(m.getSparseMatrixOrderedList().getTripleAtIndex(index));
+			index++;
+		}
 		
 	}
 
-	public void subtractSparseMatrix(SparseMatrix<Arithmetic> m){
-		this.addSparseMatrix(m.sparse_matrix_list.negate())
+	/**Subtract input SparseMatrix from this SparseMatrix.
+	 * @param m Input SparseMatrix for subtraction.
+	 */
+	public void subtractSparseMatrix(SparseMatrix m){
+		m.sparse_matrix_list.negate();
+		this.addSparseMatrix(m);
+		}
+	
+	
+	/**Multiply this SparseMatrix by the Arithmetic parameter.
+	 * @param v Arithmetic value to be multiplied by.
+	 */
+	public void multiplyByArithmeticValue(Arithmetic v){
+		int cond = sparse_matrix_list.getOrderedListSize();
+		for(int i = 0; i < cond; i++){
+			sparse_matrix_list.getTripleAtIndex(i).getValue().multiply(v);
+		}
 	}
+	
+	public void multiplyBySparseMatrix(SparseMatrix<Arithmetic> m){
+		
+	}
+	
+	/**Transpose this SparseMatrix.
+	 * @return The new transposed SparseMatrix.
+	 */
+	public SparseMatrix<Arithmetic> transposeSparseMatrix(){
+		int i = 0;
+		SparseMatrix<Arithmetic> newMatrix = new SparseMatrix<Arithmetic>(this.cols,this.rows,this.kind);
+		Triple<Arithmetic> t = sparse_matrix_list.getTripleAtIndex(i);
+		while(t != null){
+			t.transposeTriple();
+			newMatrix.sparse_matrix_list.insertTriple(t);
+			t = sparse_matrix_list.getNextTriple(i);
+			i++;
+		}
+		return newMatrix;
+	}
+	
+	public void posExponentiation(int power){
+		
+	}
+}
 
 	
 
 
 
-}

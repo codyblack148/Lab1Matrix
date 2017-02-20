@@ -28,7 +28,7 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	 * @throws CloneNotSupportedException
 	 */
 	public Triple<Arithmetic> getTriple() throws CloneNotSupportedException{
-		return (Triple<Arithmetic>) this.clone();
+		return (Triple<Arithmetic>)this.clone();
 	}
 	/**
 	 * @return The type of Arithmetic.
@@ -73,7 +73,7 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	 * @return Transposed Triple
 	 */
 	public Triple<Arithmetic> transposeTriple(){
-		Triple t = new Triple(this.value,this.col_num,this.row_num,this.kind);
+		Triple<Arithmetic> t = new Triple<Arithmetic>(this.value,this.col_num,this.row_num,this.kind);
 				return t;
 	}
 	/**Tell if two Triples are equal.
@@ -96,6 +96,9 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 		if(this.kind.equals(t.kind)){
 			this.changeTripleValue(this.value.add(t.value));
 		}
+		else{
+			System.out.println("The two values are not of the same type");
+		}
 	}
 	/**Subtract t from this.
 	 * @param t
@@ -103,7 +106,10 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	public void subtractTriple(Triple <Arithmetic> t){
 		if(this.kind.equals(t.kind)){
 			this.changeTripleValue(this.value.subtract(t.value));
-	}
+		}
+		else{
+			System.out.println("The two values are not of the same type");
+		}
 	}
 	
 	/**
@@ -112,6 +118,10 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	 */
 	public boolean isEqualLocation(Triple<Arithmetic> t){
 		return this.row_num==t.row_num && this.col_num==t.col_num && this.kind.equals(t.kind);
+	}
+	
+	public void negate(){
+		this.value.negate();
 	}
 
 	/**Compare to method for Triples.

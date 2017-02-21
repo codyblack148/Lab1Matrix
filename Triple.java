@@ -1,3 +1,4 @@
+
 /**
  * @author codyblack
  * Triple will be used to represent an element of a SparseMatrix with row number, column number, and value. 
@@ -60,7 +61,19 @@ public class Triple<E extends Arithmetic> implements Cloneable, Comparable<Tripl
 	 * @throws CloneNotSupportedException
 	 */
 	public Triple<Arithmetic> getTriple() throws CloneNotSupportedException{
-		return (Triple<Arithmetic>)this.clone();
+		Triple<Arithmetic> ans = null;
+		try{
+			ans = (Triple<Arithmetic>)super.clone();
+			if(this.value != null){
+				ans.value=this.value.clone();
+				ans.row_num=this.row_num;
+				ans.col_num=this.col_num;
+				ans.kind=this.kind;
+			}
+		}
+		catch (CloneNotSupportedException cns ) {}
+		
+		return ans;
 	}
 	/**
 	 * @return The type of Arithmetic.

@@ -117,4 +117,20 @@ public class Main {
 	 * to use GitHub and work in that way. I would work with Adam again.
 	 */
 	
+	/* Adam Crawford LookBack
+	This Lab was interesting because of the comlexity of the classes needed to make a sparse matrix work in coding. 
+	I havent used a lot of get commands in most of my CS classes until this class. This lab had me using tons of
+	get commands just to get a simple value. It is always enjoyable being able to think like a computer to make the
+	next line of code predictable knowing that the next attribute call is only one line away. I have never used any 
+	clone methods before so it was cool to see how they work and how to write them.
+	
+	Working with Cody has been a challenge. We had conflicting designs and conflicting ideas. Cody is able to write 
+	faster than I can, So Cody did most of the coding. When the methods became complex I would take the time to write 
+	and debug them while coding write the methods that would be used the most. We used GitHub to work on the code.
+	Cody would work on the code each night, because of the difference in designs I had cody write the names of the 
+	methods and what He wanted them to do, so I could come back later and either fix the code that needed debugging 
+	or write the code needed for the method names he had left for me. 
+	All in All I would work with Cody again.
+	*/
+
 }

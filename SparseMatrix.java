@@ -111,7 +111,11 @@ public class SparseMatrix<E extends Arithmetic> {
 			sparse_matrix_list.getTripleAtIndex(i).getValue().multiply(v);
 		}
 	}
-	
+	/**
+	Multiples a Sparse Matrix by another Sparse Matrix
+	@param m is a SparseMatrix that will be used to multiple the first SparseMatrix by.
+	@return answer will return the results of the multiplication of the SparseMatrix
+	*/
 	public SparseMatrix<Arithmetic> multiplyBySparseMatrix(SparseMatrix<Arithmetic> m){
 	//find this.col where it equals m.row
 	//this.row and m.col are the location this.value times m.value is the result
@@ -148,6 +152,11 @@ public class SparseMatrix<E extends Arithmetic> {
 		return newMatrix;
 	}
 	
+	/** Computes a matrix to a positive power.
+	@param power is a integer that is used to raise the Sparse Matrix to a power.
+	@return answer is the new Sparse Matrix raised to the x power.
+	
+	*/
 	public SparseMatrix<Arithmetic> posExponentiation(int power){
 		SparseMatrix<Arithmetic> answer = new SparseMatrix<Arithmetic>(this.rows,this.cols,this.kind);
 		SparseMatrix<Arithmetic> one = new SparseMatrix<Arithmetic>(this.rows,this.cols,this.kind);

@@ -3,10 +3,8 @@
 // ? class Prob
 
 /*	File:	Matrix.java
-
 	The class Matrix manages operations on a two dimensional array 
 	of Arithmetic elements.
-
 	@author yanushka
  */
 
@@ -73,7 +71,6 @@ class Matrix< E extends Arithmetic > implements Cloneable {
  	@param c a positive integer for the number of columns
 	@param numberTerms a positive integer for the number of non zero terms
 	@param kind an EnumArithmetic object
-
 	if numberTerms < r * c 
             do numberTerm times
                 Put a new random instance of indicated Arithmetic class.
@@ -120,7 +117,6 @@ class Matrix< E extends Arithmetic > implements Cloneable {
 /**	Add this Matrix object to the parameter.
 	@param right the right operand for addition
 	@return the sum as this + right
-
 	@precondition dimensions of the parameter agree with current dimensions.
  */
     public Matrix< Arithmetic > add( Matrix< Arithmetic > right ) {
@@ -213,7 +209,6 @@ class Matrix< E extends Arithmetic > implements Cloneable {
 /**	Multiply this Matrix object and the parameter.
 	@param right the right operand for multiplication
 	@return the product as this * right
-
 	@precondition the number of columns of ary equals the number of rows
 	of right.ary
  */
@@ -418,16 +413,31 @@ class Matrix< E extends Arithmetic > implements Cloneable {
 	return ary;
     }
     
-    public SparseMatrix<Arithmetic> changeToSparseMatrix(){
+    public SparseMatrix<Arithmetic> changeToSparseMatrix(EnumArithmetic kind){
     	int count = 0;
     	int i, j;
     	for(i = 0; i <= rows; i++){
     		for(j = 0; j <= cols; j++){
-    			/*Search for values that are equal to zero. Increment counter each time one is found.
-    			 * At the end, if 85% of the matrix are zeros, create new SparseMatrix and start 
-    			 * inserting the Triples. If this requirement is not met, return print statement.
-    			 */
+				if(ary[i][j].equals(0)){
+					count++;
+				}
     		}
-    	}
+    	}	
+		if((rows*cols*.85)<=count){
+			SparseMatrix<Arithmetic> answer = new SparseMatrix<Arithmetic>(count,count,kind);
+			for(i = 0; i <= rows; i++){
+				for(j = 0; j <= cols; j++){
+					if(!(ary[i][j].equals(0))){
+						Triple<Arithmetic> t = new Triple<Arithmetic>(ary[i][j],i,j,kind);
+						answer.getSparseMatrixOrderedList().insertTriple( t );
+					}
+				}
+			}
+			return answer;
+		}
+		else {
+			System.out.println(" We are sorry but there is too many important values in this matrix to make a sparse matrix");
+			return null;
+		}
     }
 }

@@ -85,7 +85,6 @@ public class SparseMatrix<E extends Arithmetic> {
 	 * @param m Input SparseMatrix for addition.
 	 */
 	public void addSparseMatrix(SparseMatrix<Arithmetic> m){
-		//call the insertTriple method to do all the math for you
 		int index = 0;
 		while(m.sparse_matrix_list.getNextTriple(index) != null){
 			this.sparse_matrix_list.insertTriple(m.getSparseMatrixOrderedList().getTripleAtIndex(index));
@@ -97,7 +96,7 @@ public class SparseMatrix<E extends Arithmetic> {
 	/**Subtract input SparseMatrix from this SparseMatrix.
 	 * @param m Input SparseMatrix for subtraction.
 	 */
-	public void subtractSparseMatrix(SparseMatrix m){
+	public void subtractSparseMatrix(SparseMatrix<Arithmetic> m){
 		m.sparse_matrix_list.negate();
 		this.addSparseMatrix(m);
 		}
@@ -113,8 +112,24 @@ public class SparseMatrix<E extends Arithmetic> {
 		}
 	}
 	
-	public void multiplyBySparseMatrix(SparseMatrix<Arithmetic> m){
-		
+	public SparseMatrix<Arithmetic> multiplyBySparseMatrix(SparseMatrix<Arithmetic> m){
+	//find this.col where it equals m.row
+	//this.row and m.col are the location this.value times m.value is the result
+		SparseMatrix<Arithmetic> answer = new SparseMatrix<Arithmetic>(this.rows, this.cols, this.kind);
+		if(this.kind == m.kind){
+			for(int i = 0; i<sparse_matrix_list.getOrderedListSize(); i++){
+				if(this.sparse_matrix_list.getTripleAtIndex(i).getColNum() == m.sparse_matrix_list.getTripleAtIndex(i).getRowNum()){
+					int k=i;
+					while(m.rows == this.cols){
+						Triple<Arithmetic> t = new Triple<Arithmetic>( this.sparse_matrix_list.getTripleAtIndex(i).getValue().multiply(m.sparse_matrix_list.getTripleAtIndex(k).getValue()),this.sparse_matrix_list.getTripleAtIndex(i).getRowNum(), m.sparse_matrix_list.getTripleAtIndex(k).getColNum(),this.kind);
+						answer.sparse_matrix_list.insertTriple( t );
+						k++;
+					}			
+				}	
+			}
+			return answer;
+		}
+		return null;
 	}
 	
 	/**Transpose this SparseMatrix.
@@ -133,12 +148,24 @@ public class SparseMatrix<E extends Arithmetic> {
 		return newMatrix;
 	}
 	
-	public void posExponentiation(int power){
-		
+	public SparseMatrix<Arithmetic> posExponentiation(int power){
+		SparseMatrix<Arithmetic> answer = new SparseMatrix<Arithmetic>(this.rows,this.cols,this.kind);
+		SparseMatrix<Arithmetic> one = new SparseMatrix<Arithmetic>(this.rows,this.cols,this.kind);
+		one.sparse_matrix_list = this.getSparseMatrixOrderedList();
+		int pwr = power;
+		while(pwr > 0){
+			if( pwr % 2 == 1){
+				if(pwr == power){
+					answer.sparse_matrix_list = one.getSparseMatrixOrderedList();
+				}
+				else {
+					answer.multiplyBySparseMatrix(one);
+				}
+			}
+			pwr=pwr/2;
+		}
+		return answer;
 	}
 }
 
 	
-
-
-

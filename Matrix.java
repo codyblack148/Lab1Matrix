@@ -413,6 +413,10 @@ class Matrix< E extends Arithmetic > implements Cloneable {
 	return ary;
     }
     
+/** This method changes a Matrix to a Sparse Matrix 
+@param kind defines what type of Sparse Matrix will be made
+@return answer returns the results of the transformation from a matrix to a Sparse Matrix  
+*/
     public SparseMatrix<Arithmetic> changeToSparseMatrix(EnumArithmetic kind){
     	int count = 0;
     	int i, j;

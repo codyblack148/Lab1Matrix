@@ -125,11 +125,9 @@ public OrderedList getOrderedList(){
 	
 	try{
 		ans = (OrderedList)super.clone();
-		//for(int i=0; i < sparse_matrix_list.size(); i++){
 			if(this.sparse_matrix_list !=null){
 				ans.sparse_matrix_list=(ArrayList<Triple<Arithmetic>>)this.sparse_matrix_list.clone();
 			}
-		//}
 	}
 	catch ( CloneNotSupportedException cns ) {}
 	return ans;
@@ -180,6 +178,4 @@ public int getOrderedListSize(){
 	}
 	sb.append("]");
 	return sb.toString();
-}
-
 }

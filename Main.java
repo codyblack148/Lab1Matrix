@@ -101,5 +101,20 @@ public class Main {
 		System.out.println(sMatrix1.getSparseMatrixOrderedList());
 		
 }
+		/*
+	 * Cody Black Lookback
+	 * I thought this project overall went well and I learned a lot while going through it. It was really
+	 * the first time in a long time in a coding class where everything is not just laid out for you
+	 * in a certain way, and you have to think for yourself and collaborate across different classes to
+	 * achieve a goal. I learned how to write a compareTo method for the first time, and I was quite proud of
+	 * accomplishing that. It was also my first time writing a class where some of the attributes of that class
+	 * are objects of other classes that have been written. This lab was difficult, but the learning process
+	 * throughout it was excellent.
+	 * 
+	 * Working with Adam Crawford was smooth and easy. We are well acquainted so it was easy to work together
+	 * on this project. We utilized an online version control system called GitHub in order to collaborate on
+	 * our work. This made the process efficient and simple. In fact, I would suggest that everyone learn how 
+	 * to use GitHub and work in that way. I would work with Adam again.
+	 */
 	
 }
